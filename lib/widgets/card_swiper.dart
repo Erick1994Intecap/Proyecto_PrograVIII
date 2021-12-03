@@ -12,7 +12,7 @@ class _CardSwiperState extends State<CardSwiper> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: size.height * 0.5,
       //color: Colors.red,
@@ -34,7 +34,7 @@ class _CardSwiperState extends State<CardSwiper> {
                 arguments: 'movie-instance'),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: FadeInImage(
+              child: const FadeInImage(
                 placeholder: AssetImage('assets/jar-loading.gif'),
                 image: AssetImage('assets/no_image.jpeg'),
                 fit: BoxFit.cover,

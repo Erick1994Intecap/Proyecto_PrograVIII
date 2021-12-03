@@ -12,12 +12,12 @@ class MoviesProvider extends ChangeNotifier {
 
   void getNowMovies() async {
     //Llamado al API
-    final url = Uri.https(_baseUrl, '3/movie/now_playing',
+    final url = Uri.https(_baseUrl, '3/movie/580489', //'3/movie/now_playing',
         {'api_key': _apiKey, 'language': _language, 'page': '1'});
     final response = await http.get(url);
     print(response.body);
-    final nowPlayingResponse = NowPlayingResponse.fromJson(response.body);
-    print(nowPlayingResponse.results[0].posterPath);
+    final movie = Movie.fromJson(response.body);
+    print(movie.backdropPath);
     //print(nowPlayingResponse.results[0].title);
     //notifyListeners();
   }
