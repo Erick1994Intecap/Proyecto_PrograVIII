@@ -21,10 +21,9 @@ class DetailsScreen extends StatelessWidget {
               title: args.title,
               originalTitle: args.originalTitle,
               voteAverage: args.voteAverage,
+              postherPotho: args.posterPath,
             ),
-            _Overview(),
-            _Overview(),
-            _Overview(),
+            _Overview(overView: args.overview),
             CastingCards()
           ]))
         ],
@@ -63,11 +62,13 @@ class _PosterAndTitle extends StatelessWidget {
   final String title;
   final String originalTitle;
   final double voteAverage;
+  final String postherPotho;
 
   _PosterAndTitle(
       {required this.title,
       required this.originalTitle,
-      required this.voteAverage});
+      required this.voteAverage,
+      required this.postherPotho});
   //const _PosterAndTitle({Key? key}) : super(key: key);
 
   @override
@@ -87,7 +88,10 @@ class _PosterAndTitle extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: FadeInImage(
                   placeholder: AssetImage('assets/no_image.jpeg'),
-                  image: NetworkImage('https://via.placeholder.com/200x300'),
+                  //image: NetworkImage('https://via.placeholder.com/200x300'),
+                  image: NetworkImage(
+                      "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" +
+                          postherPotho),
                   height: 150,
                 ),
               ),
@@ -133,14 +137,16 @@ class _PosterAndTitle extends StatelessWidget {
 }
 
 class _Overview extends StatelessWidget {
-  const _Overview({Key? key}) : super(key: key);
+  final String overView;
+
+  const _Overview({Key? key, required this.overView}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
       child: Text(
-        'movie.overview: It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters',
+        overView,
         textAlign: TextAlign.justify,
         style: Theme.of(context).textTheme.subtitle1,
       ),

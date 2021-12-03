@@ -45,7 +45,11 @@ class _MyHomePageState extends State<MyHomePage> {
       debugShowCheckedModeBanner: false,
       title: 'Peliculas',
       initialRoute: 'home',
-      routes: {'home': (_) => HomeScreen(), 'details': (_) => DetailsScreen()},
+      routes: {
+        'home': (_) => HomeScreen(),
+        'details': (_) => DetailsScreen(),
+        'similar': (_) => SimilarMovieScreen()
+      },
       theme: ThemeData.dark()
           .copyWith(appBarTheme: AppBarTheme(color: Colors.blue)),
     );

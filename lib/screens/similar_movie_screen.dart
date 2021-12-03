@@ -4,18 +4,21 @@ import 'package:cartelera/providers/movies_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class HomeSwippedScreen extends StatelessWidget {
-  const HomeSwippedScreen({Key? key}) : super(key: key);
+class SimilarMovieScreen extends StatelessWidget {
+  const SimilarMovieScreen({Key? key}) : super(key: key);
 //   @override
 //   _HomeSwippedState createState() => _HomeSwippedState();
 // }
 
 //class _HomeSwippedState extends State<HomeSwippedScreen> {
 
+  static const routeName = '/similar';
+
   @override
   Widget build(BuildContext context) {
-    late Future<TopRatedResponse> np;
-    np = MoviesProvider().getOnTopMovies();
+    final args = ModalRoute.of(context)!.settings.arguments as Movie;
+    late Future<SimilarMoviesResponse> np;
+    np = MoviesProvider().getSimilarMovie(args.id);
 
     return Scaffold(
       body: CustomScrollView(
@@ -40,9 +43,9 @@ class HomeSwippedScreen extends StatelessWidget {
     // );
   }
 
-  Widget getInfo(BuildContext context, Future<TopRatedResponse> np) {
+  Widget getInfo(BuildContext context, Future<SimilarMoviesResponse> np) {
     return Center(
-      child: FutureBuilder<TopRatedResponse>(
+      child: FutureBuilder<SimilarMoviesResponse>(
         future: np,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -78,37 +81,6 @@ class HomeSwippedScreen extends StatelessWidget {
                                 child: const Text('Detalles'),
                                 onPressed: () {
                                   Navigator.pushNamed(context, 'details',
-                                      arguments: Movie(
-                                          adult: snapshot
-                                              .data!.results[index].adult,
-                                          backdropPath: snapshot.data!
-                                              .results[index].backdropPath,
-                                          id: snapshot.data!.results[index].id,
-                                          originalTitle: snapshot.data!
-                                              .results[index].originalTitle,
-                                          overview: snapshot
-                                              .data!.results[index].overview,
-                                          popularity: snapshot
-                                              .data!.results[index].popularity,
-                                          posterPath: snapshot
-                                              .data!.results[index].posterPath,
-                                          releaseDate: snapshot
-                                              .data!.results[index].releaseDate,
-                                          title: snapshot
-                                              .data!.results[index].title,
-                                          video: snapshot
-                                              .data!.results[index].video,
-                                          voteAverage: snapshot
-                                              .data!.results[index].voteAverage,
-                                          voteCount: snapshot
-                                              .data!.results[index].voteCount));
-                                },
-                              ),
-                              const SizedBox(width: 8),
-                              TextButton(
-                                child: const Text('Similares'),
-                                onPressed: () {
-                                  Navigator.pushNamed(context, 'similar',
                                       arguments: Movie(
                                           adult: snapshot
                                               .data!.results[index].adult,
