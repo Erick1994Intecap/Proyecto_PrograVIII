@@ -1,8 +1,8 @@
 import 'package:cartelera/models/models.dart';
+import 'package:cartelera/models/top_rated_response.dart';
 import 'package:cartelera/providers/movies_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:cartelera/widgets/widgets.dart';
 
 class HomeSwippedScreen extends StatelessWidget {
   const HomeSwippedScreen({Key? key}) : super(key: key);
@@ -13,8 +13,8 @@ class HomeSwippedScreen extends StatelessWidget {
 //class _HomeSwippedState extends State<HomeSwippedScreen> {
   @override
   Widget build(BuildContext context) {
-    late Future<NowPlayingResponse> np;
-    np = MoviesProvider().getOnDisplayMovies();
+    late Future<TopRatedResponse> np;
+    np = MoviesProvider().getOnTopMovies();
 
     return Scaffold(
       body: CustomScrollView(
@@ -39,9 +39,9 @@ class HomeSwippedScreen extends StatelessWidget {
     // );
   }
 
-  Widget getInfo(BuildContext context, Future<NowPlayingResponse> np) {
+  Widget getInfo(BuildContext context, Future<TopRatedResponse> np) {
     return Center(
-      child: FutureBuilder<NowPlayingResponse>(
+      child: FutureBuilder<TopRatedResponse>(
         future: np,
         builder: (context, snapshot) {
           if (snapshot.hasData) {

@@ -38,6 +38,20 @@ class MoviesProvider extends ChangeNotifier {
     }
   }
 
+  Future<TopRatedResponse> getOnTopMovies() async {
+    //Llamado al API
+    final url = Uri.https(_baseUrl, '3/movie/top_rated', //'3/movie/580489', //
+        {'api_key': _apiKey, 'language': _language, 'page': '1'});
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      //ok
+      return TopRatedResponse.fromJson(response.body);
+    } else {
+      print(response.statusCode);
+      throw Exception("Fail");
+    }
+  }
+
   Future<Movie> getMovie(int index) async {
     //Llamado al API
     final url =
