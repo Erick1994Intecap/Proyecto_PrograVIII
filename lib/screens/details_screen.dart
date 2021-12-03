@@ -90,6 +90,7 @@ class _PosterAndTitle extends StatelessWidget {
                 child: FadeInImage(
                   placeholder: AssetImage('assets/no_image.jpeg'),
                   //image: NetworkImage('https://via.placeholder.com/200x300'),
+
                   image: NetworkImage(
                       "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" +
                           postherPotho),
@@ -193,19 +194,9 @@ class _CardSwiper extends StatelessWidget {
                               child: Column(
                                 children: [
                                   ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: FadeInImage(
-                                      placeholder:
-                                          AssetImage('assets/no_image.jpeg'),
-                                      image: NetworkImage(
-                                          "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" +
-                                              snapshot.data!.cast[index]
-                                                  .profilePath),
-                                      height: 140,
-                                      width: 100,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: _fImage(snapshot
+                                          .data!.cast[index].profilePath)),
                                   SizedBox(
                                     height: 5,
                                   ),
@@ -225,5 +216,26 @@ class _CardSwiper extends StatelessWidget {
             return CircularProgressIndicator();
           }),
     );
+  }
+
+  FadeInImage _fImage(String image) {
+    if (image.isEmpty) {
+      return FadeInImage(
+        placeholder: AssetImage('assets/no_image.jpeg'),
+        image: NetworkImage('https://via.placeholder.com/200x300'),
+        height: 140,
+        width: 100,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return FadeInImage(
+        placeholder: AssetImage('assets/no_image.jpeg'),
+        image: NetworkImage(
+            "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" + image),
+        height: 140,
+        width: 100,
+        fit: BoxFit.cover,
+      );
+    }
   }
 }

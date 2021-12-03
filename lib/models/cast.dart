@@ -26,7 +26,7 @@ class Cast {
         id: json["id"],
         name: json["name"],
         originalName: json["original_name"],
-        profilePath: json["profile_path"],
+        profilePath: json["profile_path"] ?? '',
       );
 
   Map<String, dynamic> toMap() => {
