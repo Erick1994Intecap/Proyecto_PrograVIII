@@ -54,6 +54,12 @@ class HomeSwippedScreen extends StatelessWidget {
                   return Card(
                     child: ListTile(
                       title: Text(snapshot.data!.results[index].title),
+                      subtitle: Text(snapshot.data!.results[index].overview),
+                      onTap: () {
+                        Navigator.pushNamed(context, 'details', arguments: Movie(adult: snapshot.data!.results[index].adult, backdropPath: backdropPath, id: id, originalTitle: originalTitle, overview: overview, popularity: popularity, posterPath: posterPath, releaseDate: releaseDate, title: title, video: video, voteAverage: voteAverage, voteCount: voteCount))
+                        print(
+                            Text(snapshot.data!.results[index].id.toString()));
+                      },
                     ),
                   );
                 });

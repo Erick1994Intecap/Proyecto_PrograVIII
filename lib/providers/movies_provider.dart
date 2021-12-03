@@ -52,11 +52,11 @@ class MoviesProvider extends ChangeNotifier {
     }
   }
 
-  Future<Movie> getMovie(int index) async {
+  Future<Movie> getSimilarMovie(int index) async {
     //Llamado al API
-    final url =
-        Uri.https(_baseUrl, '3/movie/$index', //'3/movie/now_playing', //
-            {'api_key': _apiKey, 'language': _language, 'page': '1'});
+    final url = Uri.https(
+        _baseUrl, '3/movie/$index/similar', //'3/movie/now_playing', //
+        {'api_key': _apiKey, 'language': _language, 'page': '1'});
     final response = await http.get(url);
     if (response.statusCode == 200) {
       //ok
