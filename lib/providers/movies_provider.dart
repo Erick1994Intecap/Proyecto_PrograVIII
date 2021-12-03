@@ -52,7 +52,7 @@ class MoviesProvider extends ChangeNotifier {
     }
   }
 
-  Future<Movie> getSimilarMovie(int index) async {
+  Future<SimilarMoviesResponse> getSimilarMovie(int index) async {
     //Llamado al API
     final url = Uri.https(
         _baseUrl, '3/movie/$index/similar', //'3/movie/now_playing', //
@@ -60,7 +60,7 @@ class MoviesProvider extends ChangeNotifier {
     final response = await http.get(url);
     if (response.statusCode == 200) {
       //ok
-      return Movie.fromJson(response.body);
+      return SimilarMoviesResponse.fromJson(response.body);
     } else {
       print(response.statusCode);
       throw Exception("Fail");

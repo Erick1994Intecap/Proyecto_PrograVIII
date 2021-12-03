@@ -1,18 +1,27 @@
+import 'package:cartelera/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:cartelera/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
 
+  static const routeName = '/details';
+
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as Movie;
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           _CustomAppBar(),
           SliverList(
               delegate: SliverChildListDelegate([
-            _PosterAndTitle(),
+            _PosterAndTitle(
+              title: args.title,
+              originalTitle: args.originalTitle,
+              voteAverage: args.voteAverage,
+            ),
             _Overview(),
             _Overview(),
             _Overview(),
@@ -25,28 +34,19 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class _CustomAppBar extends StatelessWidget {
-  const _CustomAppBar({Key? key}) : super(key: key);
+  const _CustomAppBar({Key? key}) : super(key: key); //
+
+  //
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
+    return const SliverAppBar(
       backgroundColor: Colors.indigo,
       expandedHeight: 200,
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
-        title: Container(
-          alignment: Alignment.center,
-          width: double.infinity,
-          padding: EdgeInsets.only(bottom: 5, left: 10, right: 10),
-          color: Colors.black12,
-          child: Text(
-            'movie.title',
-            style: TextStyle(fontSize: 16),
-            textAlign: TextAlign.center,
-          ),
-        ),
         background: FadeInImage(
           placeholder: AssetImage('assets/no_image.jpeg'),
           image: AssetImage('assets/loading.gif'),
@@ -60,7 +60,15 @@ class _CustomAppBar extends StatelessWidget {
 }
 
 class _PosterAndTitle extends StatelessWidget {
-  const _PosterAndTitle({Key? key}) : super(key: key);
+  final String title;
+  final String originalTitle;
+  final double voteAverage;
+
+  _PosterAndTitle(
+      {required this.title,
+      required this.originalTitle,
+      required this.voteAverage});
+  //const _PosterAndTitle({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -93,26 +101,27 @@ class _PosterAndTitle extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'movie.title',
+                    title,
                     style: textTheme.headline5,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
                   Text(
-                    'movie.originalTitle',
+                    originalTitle,
                     style: textTheme.subtitle1,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.star_outline,
                         size: 15,
                         color: Colors.cyan,
                       ),
                       SizedBox(width: 5),
-                      Text('movie.voteAverage: ', style: textTheme.caption),
+                      Text(voteAverage.toStringAsPrecision(2),
+                          style: textTheme.caption),
                     ],
                   )
                 ],
