@@ -66,4 +66,19 @@ class MoviesProvider extends ChangeNotifier {
       throw Exception("Fail");
     }
   }
+
+  Future<CreditsResponse> getCastingMovie(int index) async {
+    //Llamado al API
+    final url = Uri.https(
+        _baseUrl, '3/movie/$index/credits', //'3/movie/now_playing', //
+        {'api_key': _apiKey, 'language': _language, 'page': '1'});
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      //ok
+      return CreditsResponse.fromJson(response.body);
+    } else {
+      print(response.statusCode);
+      throw Exception("Fail");
+    }
+  }
 }

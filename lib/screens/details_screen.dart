@@ -1,6 +1,7 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:cartelera/models/models.dart';
+import 'package:cartelera/providers/movies_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:cartelera/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class DetailsScreen extends StatelessWidget {
               postherPotho: args.posterPath,
             ),
             _Overview(overView: args.overview),
-            CastingCards()
+            _CardSwiper(id: args.id)
           ]))
         ],
       ),
@@ -150,6 +151,79 @@ class _Overview extends StatelessWidget {
         textAlign: TextAlign.justify,
         style: Theme.of(context).textTheme.subtitle1,
       ),
+    );
+  }
+}
+
+class _CardSwiper extends StatelessWidget {
+  final int id;
+  const _CardSwiper({Key? key, required this.id}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    late Future<CreditsResponse> np;
+    np = MoviesProvider().getCastingMovie(id);
+
+    final size = MediaQuery.of(context).size;
+    return getCast(context, np);
+  }
+
+  Widget getCast(BuildContext context, Future<CreditsResponse> np) {
+    final size = MediaQuery.of(context).size;
+    return Center(
+      child: FutureBuilder<CreditsResponse>(
+          future: np,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return SizedBox(
+                  width: double.infinity,
+                  height: size.height * 0.5,
+
+                  //color: Colors.red,
+
+                  child: Expanded(
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data!.cast.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              margin: EdgeInsets.symmetric(horizontal: 10),
+                              width: 110,
+                              height: 100,
+                              child: Column(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: FadeInImage(
+                                      placeholder:
+                                          AssetImage('assets/no_image.jpeg'),
+                                      image: NetworkImage(
+                                          "https://www.themoviedb.org/t/p/w600_and_h900_bestv2" +
+                                              snapshot.data!.cast[index]
+                                                  .profilePath),
+                                      height: 140,
+                                      width: 100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    snapshot.data!.cast[index].name,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                  )
+                                ],
+                              ),
+                            );
+                          })));
+            } else if (snapshot.hasError) {
+              return Text('No hay datos');
+            }
+            return CircularProgressIndicator();
+          }),
     );
   }
 }

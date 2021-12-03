@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'models.dart';
-
 class Movie {
   Movie({
     required this.adult,
