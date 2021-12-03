@@ -1,3 +1,4 @@
+import 'package:cartelera/models/upcoming_response.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:cartelera/models/models.dart';
@@ -76,6 +77,20 @@ class MoviesProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       //ok
       return CreditsResponse.fromJson(response.body);
+    } else {
+      print(response.statusCode);
+      throw Exception("Fail");
+    }
+  }
+
+  Future<UpcomingResponse> getUpcomingMovies() async {
+    //Llamado al API
+    final url = Uri.https(_baseUrl, '3/movie/upcoming', //'3/movie/580489', //
+        {'api_key': _apiKey, 'language': _language, 'page': '1'});
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      //ok
+      return UpcomingResponse.fromJson(response.body);
     } else {
       print(response.statusCode);
       throw Exception("Fail");

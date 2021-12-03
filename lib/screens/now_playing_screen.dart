@@ -3,19 +3,14 @@ import 'package:cartelera/providers/movies_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class HomeSwippedScreen extends StatelessWidget {
-  const HomeSwippedScreen({Key? key}) : super(key: key);
-//   @override
-//   _HomeSwippedState createState() => _HomeSwippedState();
-// }
-
-//class _HomeSwippedState extends State<HomeSwippedScreen> {
+class RaitingScreen extends StatelessWidget {
+  const RaitingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    late Future<TopRatedResponse> np;
-    np = MoviesProvider().getOnTopMovies();
-
+    late Future<NowPlayingResponse> np;
+    np = MoviesProvider().getOnDisplayMovies();
+    // TODO: implement build
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -23,28 +18,14 @@ class HomeSwippedScreen extends StatelessWidget {
         ],
       ),
     );
-
-    // TODO: implement build
-    // return CustomScrollView(
-    //   slivers: [
-    //     SliverList(
-    //         delegate: SliverChildListDelegate([
-    //       SingleChildScrollView(
-    //         child: Column(
-    //           children: [getInfo(context, np)],
-    //         ),
-    //       )
-    //     ]))
-    //   ],
-    // );
   }
 
-  Widget getInfo(BuildContext context, Future<TopRatedResponse> np) {
+  Widget getInfo(BuildContext context, Future<NowPlayingResponse> np) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     //MEDIA QUERY
     final size = MediaQuery.of(context).size;
     return Center(
-      child: FutureBuilder<TopRatedResponse>(
+      child: FutureBuilder<NowPlayingResponse>(
         future: np,
         builder: (context, snapshot) {
           if (snapshot.hasData) {

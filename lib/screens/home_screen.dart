@@ -1,5 +1,5 @@
-import 'package:cartelera/screens/raiting_screen.dart';
-import 'package:cartelera/screens/review_screen.dart';
+import 'package:cartelera/screens/now_playing_screen.dart';
+import 'package:cartelera/screens/upcoming_screen.dart';
 import 'package:cartelera/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,9 +23,9 @@ class _HomeState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('Peliculas en Cines'),
         elevation: 0,
-        actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.search_outlined))
-        ],
+        // actions: [
+        //   IconButton(onPressed: () {}, icon: Icon(Icons.search_outlined))
+        // ],
       ),
       // body: Container(
       //   child: Center(
@@ -44,10 +44,11 @@ class _HomeState extends State<HomeScreen> {
         onTap: onTapeped,
         fixedColor: Colors.blueAccent,
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.moving), label: 'Top'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Favoritos'),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Lista')
+              icon: Icon(Icons.shutter_speed), label: 'Novedades'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.rotate_right), label: 'Proximamente')
         ],
       ),
     );

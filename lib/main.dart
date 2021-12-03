@@ -44,8 +44,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Peliculas',
-      initialRoute: 'home',
+      initialRoute: LoginPage.id,
       routes: {
+        LoginPage.id: (context) => LoginPage(),
         'home': (_) => HomeScreen(),
         'details': (_) => DetailsScreen(),
         'similar': (_) => SimilarMovieScreen()
