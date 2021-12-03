@@ -4,7 +4,7 @@ import 'package:cartelera/models/models.dart';
 
 class MoviesProvider extends ChangeNotifier {
   MoviesProvider() {
-    getOnDisplayMovies();
+    this.getOnDisplayMovies();
   }
   final String _apiKey = "d070e0fd80422b7ae7c2736a6da2b92e";
   final String _baseUrl = "api.themoviedb.org";

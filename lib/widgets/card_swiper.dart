@@ -29,6 +29,7 @@ class _CardSwiperState extends State<CardSwiper> {
         //     image: AssetImage('assets/no_image.jpeg'),
         //   );
         itemBuilder: (_, int index) {
+          //movie.backdropPath;
           return GestureDetector(
             onTap: () => Navigator.pushNamed(context, 'details',
                 arguments: 'movie-instance'),
