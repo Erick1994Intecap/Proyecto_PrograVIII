@@ -8,7 +8,7 @@ class Movie {
     required this.backdropPath,
     //required this.genreIds,
     required this.id,
-    required this.originalLanguage,
+    //required this.originalLanguage,
     required this.originalTitle,
     required this.overview,
     required this.popularity,
@@ -24,13 +24,13 @@ class Movie {
   String? backdropPath;
   //List<int> genreIds;
   int id;
-  String? originalLanguage;
-  String? originalTitle;
-  String? overview;
+  //String originalLanguage;
+  String originalTitle;
+  String overview;
   double popularity;
-  String? posterPath;
+  String posterPath;
   DateTime releaseDate;
-  String? title;
+  String title;
   bool video;
   double voteAverage;
   int voteCount;
@@ -44,7 +44,7 @@ class Movie {
         backdropPath: json["backdrop_path"],
         //genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"],
-        originalLanguage: json["originalLanguage"],
+        //originalLanguage: json["originalLanguage"],
         originalTitle: json["original_title"],
         overview: json["overview"],
         popularity: json["popularity"].toDouble(),
