@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:cartelera/models/upcoming_response.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -123,6 +126,24 @@ class MoviesProvider extends ChangeNotifier {
     } else {
       print(response.statusCode);
       throw Exception("Fail");
+    }
+  }
+
+  void setRating(int index, double rate) async {
+    final url =
+        Uri.https(_baseUrl, '3/movie/$index/rating', {'api_key': _apiKey});
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({"value": rate}),
+    );
+    if (response.statusCode == 201) {
+      print('Se logro el cometido');
+    } else {
+      print(response.statusCode);
+      //throw Exception('Fallamos en la mision');
     }
   }
 }

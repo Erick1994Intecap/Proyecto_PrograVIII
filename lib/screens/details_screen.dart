@@ -2,6 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:cartelera/models/models.dart';
 import 'package:cartelera/providers/movies_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
@@ -11,6 +12,8 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Movie;
+
+    print(args.id.toString());
 
     return Scaffold(
       body: CustomScrollView(
@@ -23,6 +26,7 @@ class DetailsScreen extends StatelessWidget {
               originalTitle: args.originalTitle,
               voteAverage: args.voteAverage,
               postherPotho: args.posterPath,
+              id: args.id,
             ),
             _Overview(overView: args.overview),
             _CardSwiper(id: args.id)
@@ -63,7 +67,7 @@ class _CustomAppBar extends StatelessWidget {
           if (snapshot.hasData) {
             return FadeInImage(
               placeholder: AssetImage('assets/no_image.jpeg'),
-              image: NetworkImage("https://www.themoviedb.org/t/p/w500" +
+              image: NetworkImage("https://www.themoviedb.org/t/p/original" +
                   snapshot.data!.backdrops[0].filePath),
               fit: BoxFit.cover,
             );
@@ -86,12 +90,14 @@ class _PosterAndTitle extends StatelessWidget {
   final String originalTitle;
   final double voteAverage;
   final String postherPotho;
+  final int id;
 
   _PosterAndTitle(
       {required this.title,
       required this.originalTitle,
       required this.voteAverage,
-      required this.postherPotho});
+      required this.postherPotho,
+      required this.id});
   //const _PosterAndTitle({Key? key}) : super(key: key);
 
   @override
@@ -142,14 +148,20 @@ class _PosterAndTitle extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.star_outline,
-                        size: 15,
-                        color: Colors.cyan,
-                      ),
-                      SizedBox(width: 5),
-                      Text(voteAverage.toStringAsPrecision(2),
-                          style: textTheme.caption),
+                      Expanded(
+                        child: RatingBar.builder(
+                          itemCount: 5,
+                          initialRating: voteAverage / 2,
+                          allowHalfRating: true,
+                          itemSize: 20,
+                          itemBuilder: (context, _) {
+                            return Icon(Icons.star, color: Colors.amber);
+                          },
+                          onRatingUpdate: (rating) {
+                            MoviesProvider().setRating(id, 9);
+                          },
+                        ),
+                      )
                     ],
                   )
                 ],
