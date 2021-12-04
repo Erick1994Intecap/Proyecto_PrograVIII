@@ -96,4 +96,18 @@ class MoviesProvider extends ChangeNotifier {
       throw Exception("Fail");
     }
   }
+
+  void getData() async {
+    //Llamado al API
+    final url =
+        Uri.https(_baseUrl, '3/movie/580489/images', //'3/movie/now_playing',
+            {'api_key': _apiKey});
+    final response = await http.get(url);
+    //print(response.body);
+    final image = ImagesResponse.fromJson(response.body);
+    print(image.backdrops[0].filePath);
+    print('Aqui estoy');
+    //print(nowPlayingResponse.results[0].title);
+    //notifyListeners();
+  }
 }

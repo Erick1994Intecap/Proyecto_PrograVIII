@@ -23,24 +23,11 @@ class HomeSwippedScreen extends StatelessWidget {
         ],
       ),
     );
-
-    // TODO: implement build
-    // return CustomScrollView(
-    //   slivers: [
-    //     SliverList(
-    //         delegate: SliverChildListDelegate([
-    //       SingleChildScrollView(
-    //         child: Column(
-    //           children: [getInfo(context, np)],
-    //         ),
-    //       )
-    //     ]))
-    //   ],
-    // );
   }
 
   Widget getInfo(BuildContext context, Future<TopRatedResponse> np) {
     final TextTheme textTheme = Theme.of(context).textTheme;
+    //MoviesProvider().getData();
     //MEDIA QUERY
     final size = MediaQuery.of(context).size;
     return Center(
