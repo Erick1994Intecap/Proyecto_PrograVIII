@@ -10,9 +10,10 @@ class MoviesProvider extends ChangeNotifier {
   MoviesProvider() {
     this.getOnDisplayMovies();
   }
-  final String _apiKey = "d070e0fd80422b7ae7c2736a6da2b92e";
+  final String _apiKey = "830892c9afa9829d326fb223f949a787";
   final String _baseUrl = "api.themoviedb.org";
   final String _language = "es-ES";
+  final String _sessionId = "5a520b4e940c45767f77d1778b96471b";
 
   void getNowMovies() async {
     //Llamado al API
@@ -104,7 +105,9 @@ class MoviesProvider extends ChangeNotifier {
     //Llamado al API
     final url =
         Uri.https(_baseUrl, '3/movie/580489/images', //'3/movie/now_playing',
-            {'api_key': _apiKey});
+            {
+          'api_key': _apiKey,
+        });
     final response = await http.get(url);
     //print(response.body);
     final image = ImagesResponse.fromJson(response.body);
@@ -130,8 +133,8 @@ class MoviesProvider extends ChangeNotifier {
   }
 
   void setRating(int index, double rate) async {
-    final url =
-        Uri.https(_baseUrl, '3/movie/$index/rating', {'api_key': _apiKey});
+    final url = Uri.https(_baseUrl, '3/movie/$index/rating',
+        {'api_key': _apiKey, 'guest_session_id': _sessionId});
     final response = await http.post(
       url,
       headers: {

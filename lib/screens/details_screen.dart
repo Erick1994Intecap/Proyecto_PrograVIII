@@ -158,7 +158,7 @@ class _PosterAndTitle extends StatelessWidget {
                             return Icon(Icons.star, color: Colors.amber);
                           },
                           onRatingUpdate: (rating) {
-                            MoviesProvider().setRating(id, 9);
+                            MoviesProvider().setRating(id, rating * 2);
                           },
                         ),
                       )
