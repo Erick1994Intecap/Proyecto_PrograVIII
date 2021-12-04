@@ -5,11 +5,6 @@ import 'package:flutter/widgets.dart';
 
 class HomeSwippedScreen extends StatelessWidget {
   const HomeSwippedScreen({Key? key}) : super(key: key);
-//   @override
-//   _HomeSwippedState createState() => _HomeSwippedState();
-// }
-
-//class _HomeSwippedState extends State<HomeSwippedScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +22,7 @@ class HomeSwippedScreen extends StatelessWidget {
 
   Widget getInfo(BuildContext context, Future<TopRatedResponse> np) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    //MoviesProvider().getData();
+
     //MEDIA QUERY
     final size = MediaQuery.of(context).size;
     return Center(

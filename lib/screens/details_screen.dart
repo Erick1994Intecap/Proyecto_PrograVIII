@@ -15,7 +15,7 @@ class DetailsScreen extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _CustomAppBar(),
+          _CustomAppBar(id: args.id),
           SliverList(
               delegate: SliverChildListDelegate([
             _PosterAndTitle(
@@ -34,26 +34,48 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class _CustomAppBar extends StatelessWidget {
-  const _CustomAppBar({Key? key}) : super(key: key); //
+  final int id;
+  const _CustomAppBar({Key? key, required this.id}) : super(key: key); //
 
   //
 
   @override
   Widget build(BuildContext context) {
-    return const SliverAppBar(
-      backgroundColor: Colors.indigo,
+    late Future<ImagesResponse> np;
+    np = MoviesProvider().getImages(id);
+    return SliverAppBar(
+      backgroundColor: Colors.black,
       expandedHeight: 200,
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
-        centerTitle: true,
-        background: FadeInImage(
-          placeholder: AssetImage('assets/no_image.jpeg'),
-          image: AssetImage('assets/loading.gif'),
-          fit: BoxFit.cover,
-          width: 130,
-          height: 190,
-        ),
+          centerTitle: true, background: _getImages(context, np)),
+    );
+
+    //return _getImages(context, np);
+  }
+
+  Widget _getImages(BuildContext context, Future<ImagesResponse> np) {
+    return Center(
+      child: FutureBuilder<ImagesResponse>(
+        future: np,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return FadeInImage(
+              placeholder: AssetImage('assets/no_image.jpeg'),
+              image: NetworkImage("https://www.themoviedb.org/t/p/w500" +
+                  snapshot.data!.backdrops[0].filePath),
+              fit: BoxFit.cover,
+            );
+          } else if (snapshot.hasError) {
+            return FadeInImage(
+              placeholder: AssetImage('assets/no_image.jpeg'),
+              image: AssetImage('assets/loading.gif'),
+              fit: BoxFit.cover,
+            );
+          }
+          return CircularProgressIndicator();
+        },
       ),
     );
   }

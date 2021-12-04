@@ -110,4 +110,19 @@ class MoviesProvider extends ChangeNotifier {
     //print(nowPlayingResponse.results[0].title);
     //notifyListeners();
   }
+
+  Future<ImagesResponse> getImages(int index) async {
+    //Llamado al API
+    final url =
+        Uri.https(_baseUrl, '3/movie/$index/images', //'3/movie/now_playing', //
+            {'api_key': _apiKey});
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      //ok
+      return ImagesResponse.fromJson(response.body);
+    } else {
+      print(response.statusCode);
+      throw Exception("Fail");
+    }
+  }
 }
